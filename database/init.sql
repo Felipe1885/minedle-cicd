@@ -1,0 +1,18 @@
+CREATE DATABASE IF NOT EXISTS app_db;
+USE app_db;
+
+CREATE USER IF NOT EXISTS 'app_user'@'%' IDENTIFIED BY 'senha123';
+GRANT ALL PRIVILEGES ON app_db.* TO 'app_user'@'%';
+FLUSH PRIVILEGES;
+
+CREATE TABLE IF NOT EXISTS tabuleiros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    dia DATE NOT NULL,
+    seed INT NOT NULL);
+
+CREATE TABLE IF NOT EXISTS placares (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    tabuleiros_id INT NOT NULL,
+    tempo_gasto DECIMAL(5, 2) UNSIGNED NOT NULL,
+    FOREIGN KEY (tabuleiros_id) REFERENCES tabuleiros(id) ON DELETE CASCADE);
